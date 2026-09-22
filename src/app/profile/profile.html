@@ -1,0 +1,24 @@
+<div style="padding: 40px; font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
+  <h2>Perfil del usuario autenticado</h2>
+
+  <div *ngIf="profile">
+    <p><strong>Nombre:</strong> {{ profile.name }}</p>
+    <p><strong>Username / Email:</strong> {{ profile.username }}</p>
+    <p><strong>Local Account ID:</strong> {{ profile.localAccountId }}</p>
+    
+    <p><strong>Roles:</strong> 
+      <span *ngIf="roles.length > 0">{{ roles.join(', ') }}</span>
+      <span *ngIf="roles.length === 0">Ningún rol asignado</span>
+    </p>
+
+    <h3 style="margin-top: 30px;">Claims del token (para depuración y evaluación)</h3>
+    <pre style="background: #f4f4f4; padding: 15px; border-radius: 6px; overflow-x: auto;">{{ claims | json }}</pre>
+  </div>
+
+  <div *ngIf="!profile">
+    <p>No se encontró información del usuario.</p>
+  </div>
+
+  <br>
+  <a routerLink="/" style="color: #0078d4;">← Volver al inicio</a>
+</div>
