@@ -13,3 +13,10 @@ export const environment = {
     uri: 'https://URL_DEL_API_GATEWAY_AQUI' // cambiarlo despues
   }
 };
+
+
+// frontend | Funcionando, configuracion MSAL, mostrar inicio sesion y confirar que funciona con tokens,
+//  mostrar 3 pantallas, donde el (admin,operador,cliente) realize alguna accion, mostrar que se recibe un json.
+
+
+
