@@ -17,18 +17,27 @@ export class AppComponent implements OnInit {
   constructor(
     private authService: MsalService,
     private msalBroadcastService: MsalBroadcastService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
 
-    this.authService.handleRedirectObservable({ navigateToLoginRequestUrl: false })
+    this.authService.handleRedirectObservable({
+      navigateToLoginRequestUrl: false
+    }).subscribe(result => {
+      console.log('MSAL redirect procesado:', result);
+    });
 
     this.msalBroadcastService.inProgress$
       .pipe(
-        filter((status: InteractionStatus) => status === InteractionStatus.None)
+        filter((status: InteractionStatus) =>
+          status === InteractionStatus.None
+        )
       )
       .subscribe(() => {
-        // Opcional: puedes poner lógica aquí
+        console.log(
+          'MSAL terminó interacción. Cuentas:',
+          this.authService.instance.getAllAccounts()
+        );
       });
   }
 }
