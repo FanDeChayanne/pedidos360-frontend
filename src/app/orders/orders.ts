@@ -33,9 +33,10 @@ import { MsalService } from "@azure/msal-angular";
             Catálogo
           </a>
 
-          <a class="nav-item" href="javascript:void(0)">
-            <i class="bi bi-gear"></i>
-            TEST
+          <!-- Usuarios (solo Admin) -->
+          <a class="nav-item" *ngIf="esAdmin" routerLink="/usuarios">
+            <i class="bi bi-people"></i>
+            Usuarios
           </a>
 
           <a class="nav-item" href="javascript:void(0)">
