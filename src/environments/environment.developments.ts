@@ -10,7 +10,7 @@ export const environment = {
   },
   apiConfig: {
     scopes: ['api://4ea351c0-ef77-41aa-acac-dd63f5d0648f/access_as_user'],
-    uri: 'https://URL_DEL_API_GATEWAY_AQUI' // cambiarlo despues
+    uri: 'http://localhost:8080' // cambiarlo despues
   }
 };
 

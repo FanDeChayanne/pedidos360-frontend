@@ -46,13 +46,12 @@ export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   const protectedResourceMap = new Map<string, Array<string>>();
 
   protectedResourceMap.set(
-    protectedResources.apiPedidos360.endpoint,
+    `${protectedResources.apiPedidos360.endpoint}/*`,
     protectedResources.apiPedidos360.scopes,
   );
 
   return {
     interactionType: InteractionType.Redirect,
-
     protectedResourceMap,
   };
 }

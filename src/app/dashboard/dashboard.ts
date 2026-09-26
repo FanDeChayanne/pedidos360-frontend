@@ -4,6 +4,8 @@ import { RouterLink } from "@angular/router";
 import { AuthService } from "../core/auth.service";
 import { MsalService } from "@azure/msal-angular";
 import { ChangeDetectorRef } from "@angular/core";
+import { PedidoService } from "../services/pedido-service";
+import { Pedido } from "../services/pedido";
 
 @Component({
   selector: "app-dashboard",
@@ -115,6 +117,38 @@ import { ChangeDetectorRef } from "@angular/core";
             <p class="card-text mb-0">
               Puedes crear y ver tus propios pedidos. Solo consulta catálogo.
             </p>
+          </div>
+        </div>
+
+        <!-- ========== PEDIDOS ========== -->
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-body">
+            <h5 class="card-title mb-3">Pedidos</h5>
+            <div *ngIf="pedidos.length === 0" class="text-muted">
+              No hay pedidos registrados.
+            </div>
+            <div *ngIf="pedidos.length > 0" class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let pedido of pedidos">
+                    <td>{{ pedido.id }}</td>
+                    <td>{{ pedido.clienteId }}</td>
+                    <td>{{ pedido.productoId }}</td>
+                    <td>{{ pedido.cantidad }}</td>
+                    <td>{{ pedido.estado }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -272,11 +306,13 @@ export class DashboardComponent implements OnInit {
   esAdmin = false;
   esOperador = false;
   esCliente = false;
+  pedidos: Pedido[] = [];
 
   constructor(
     private auth: AuthService,
     private msal: MsalService,
     private cdr: ChangeDetectorRef,
+    private pedidoService: PedidoService,
   ) {}
 
   async ngOnInit() {
@@ -291,9 +327,16 @@ export class DashboardComponent implements OnInit {
     this.esCliente = roles.includes("ROLE_CLIENTE");
 
     console.log("Roles del Dashboard:", this.roles);
-    console.log("Admin:", this.esAdmin);
-    console.log("Operador:", this.esOperador);
-    console.log("Cliente:", this.esCliente);
+
+    this.pedidoService.listarPedidos().subscribe({
+      next: (pedidos) => {
+        this.pedidos = pedidos;
+        console.log("Pedidos cargados:", this.pedidos);
+      },
+      error: (error) => {
+        console.error("Error obteniendo pedidos:", error);
+      },
+    });
 
     this.cdr.detectChanges();
   }
