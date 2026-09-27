@@ -2,12 +2,13 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Pedido, CrearPedido } from "./pedido";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class PedidoService {
-  private readonly apiUrl = "http://localhost:8080/api/pedidos";
+  private readonly apiUrl = `${environment.apiConfig.uri}/api/pedidos`;
 
   constructor(private http: HttpClient) {}
 
@@ -26,3 +27,4 @@ export class PedidoService {
     );
   }
 }
+
