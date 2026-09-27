@@ -11,8 +11,6 @@ export const environment = {
   apiConfig: {
     scopes: ['api://4ea351c0-ef77-41aa-acac-dd63f5d0648f/access_as_user'],
     uri: 'http://localhost:8080',
-    // App ID de la API (GUID de api://... ). Ahí deben existir los App Roles:
-    // ROLE_ADMINISTRADOR, ROLE_OPERADOR, ROLE_CLIENTE
     apiAppId: '4ea351c0-ef77-41aa-acac-dd63f5d0648f'
   }
 };

@@ -47,6 +47,7 @@ export const loginRequest = {
   ]
 };
 
+
 export const protectedResources = {
   apiPedidos360: {
     endpoint: environment.apiConfig.uri,

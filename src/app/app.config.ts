@@ -45,6 +45,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
 export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   const protectedResourceMap = new Map<string, Array<string>>();
 
+  // se define que la API requiere un token
   protectedResourceMap.set(
     `${protectedResources.apiPedidos360.endpoint}/*`,
     protectedResources.apiPedidos360.scopes,
