@@ -21,9 +21,7 @@ import { Pedido, CrearPedido } from "../services/pedido";
 
     <nav class="top-navbar">
       <div class="nav-container">
-
         <div class="nav-left">
-
           <a class="nav-item" routerLink="/dashboard">
             <i class="bi bi-house-door-fill"></i>
             Dashboard
@@ -43,11 +41,7 @@ import { Pedido, CrearPedido } from "../services/pedido";
             Catálogo
           </a>
 
-          <a
-            class="nav-item"
-            *ngIf="esAdmin"
-            routerLink="/usuarios"
-          >
+          <a class="nav-item" *ngIf="esAdmin" routerLink="/usuarios">
             <i class="bi bi-people"></i>
             Usuarios
           </a>
@@ -56,22 +50,17 @@ import { Pedido, CrearPedido } from "../services/pedido";
             <i class="bi bi-box"></i>
             TEST
           </a>
-
         </div>
-
 
         <!-- Usuario -->
 
         <div class="nav-right">
-
           <div class="user-info">
-
             <div class="avatar">
               {{ nombre ? nombre.charAt(0).toUpperCase() : "U" }}
             </div>
 
             <div class="user-text">
-
               <div class="user-name">
                 {{ nombre || "Usuario" }}
               </div>
@@ -79,87 +68,54 @@ import { Pedido, CrearPedido } from "../services/pedido";
               <div class="user-role">
                 {{ roles.join(", ") || "Sin roles" }}
               </div>
-
             </div>
-
           </div>
 
-
-          <button
-            class="btn-logout"
-            (click)="logout()"
-          >
+          <button class="btn-logout" (click)="logout()">
             <i class="bi bi-box-arrow-right"></i>
             Cerrar sesión
           </button>
-
         </div>
-
       </div>
     </nav>
-
 
     <!-- ========== CONTENIDO ========== -->
 
     <main class="main-content">
-
       <div class="p-4">
-
-        <h2 class="mb-4">
-          Pedidos
-        </h2>
-
+        <h2 class="mb-4">Pedidos</h2>
 
         <!-- ========== CREAR PEDIDO ========== -->
 
-        <div
-          *ngIf="esCliente || esAdmin"
-          class="card border-0 shadow-sm mb-4"
-        >
-
+        <div *ngIf="esCliente || esAdmin" class="card border-0 shadow-sm mb-4">
           <div class="card-body">
-
-            <h5 class="card-title">
-              Crear pedido
-            </h5>
+            <h5 class="card-title">Crear pedido</h5>
 
             <p class="card-text text-muted">
               Ingresa los datos del nuevo pedido.
             </p>
 
-
-            <form
-              class="row g-3"
-              (ngSubmit)="crearPedido()"
-            >
-
-              <!-- Cliente -->
+            <form class="row g-3" (ngSubmit)="crearPedido()">
+              <!-- Cliente (tomado automáticamente de la cuenta logueada) -->
 
               <div class="col-md-5">
-
-                <label class="form-label">
-                  Cliente
-                </label>
+                <label class="form-label"> Cliente </label>
 
                 <input
                   type="text"
                   class="form-control"
-                  [(ngModel)]="nuevoPedido.clienteId"
+                  [value]="nuevoPedido.clienteId"
                   name="clienteId"
-                  placeholder="ID del cliente"
-                  required
+                  readonly
+                  disabled
                 />
-
+                
               </div>
-
 
               <!-- Producto -->
 
               <div class="col-md-3">
-
-                <label class="form-label">
-                  Producto
-                </label>
+                <label class="form-label"> Producto </label>
 
                 <select
                   class="form-select"
@@ -167,26 +123,20 @@ import { Pedido, CrearPedido } from "../services/pedido";
                   name="productoId"
                   required
                 >
-
                   <option
                     *ngFor="let producto of productos"
                     [ngValue]="producto.id"
                   >
-                    {{ producto.nombre }} - Precio: {{ producto.precio }} - Stock: {{ producto.stock }}
+                    {{ producto.nombre }} - Precio: {{ producto.precio }} -
+                    Stock: {{ producto.stock }}
                   </option>
-
                 </select>
-
               </div>
-
 
               <!-- Cantidad -->
 
               <div class="col-md-2">
-
-                <label class="form-label">
-                  Cantidad
-                </label>
+                <label class="form-label"> Cantidad </label>
 
                 <input
                   type="number"
@@ -196,157 +146,76 @@ import { Pedido, CrearPedido } from "../services/pedido";
                   min="1"
                   required
                 />
-
               </div>
-
 
               <!-- Botón -->
 
               <div class="col-md-2 d-flex align-items-end">
-
-                <button
-                  type="submit"
-                  class="btn btn-primary w-100"
-                >
+                <button type="submit" class="btn btn-primary w-100">
                   Crear pedido
                 </button>
-
               </div>
-
             </form>
-
           </div>
-
         </div>
-
 
         <!-- ========== INFORMACIÓN OPERADOR / ADMIN ========== -->
 
-        <div
-          *ngIf="esOperador || esAdmin"
-          class="card border-0 shadow-sm mb-4"
-        >
-
+        <div *ngIf="esOperador || esAdmin" class="card border-0 shadow-sm mb-4">
           <div class="card-body">
-
-            <h5 class="card-title">
-              Gestión de pedidos
-            </h5>
+            <h5 class="card-title"></h5>
 
             <p class="card-text">
               Aquí se pueden gestionar los pedidos y sus estados.
             </p>
 
-            <ul class="mb-0">
-
-              <li>
-                CREADO → ACEPTADO
-              </li>
-
-              <li>
-                ACEPTADO → EN_PREPARACION
-              </li>
-
-              <li>
-                EN_PREPARACION → DESPACHADO
-              </li>
-
-              <li>
-                DESPACHADO → ENTREGADO
-              </li>
-
-              <li>
-                CREADO / ACEPTADO / EN_PREPARACION → CANCELADO
-              </li>
-
-            </ul>
-
+            <ul class="mb-0"></ul>
           </div>
-
         </div>
-
 
         <!-- ========== LISTA DE PEDIDOS ========== -->
 
         <div class="card border-0 shadow-sm">
-
           <div class="card-body">
-
-            <div
-              class="d-flex justify-content-between align-items-center mb-3"
-            >
-
-              <h5 class="card-title mb-0">
-                Lista de pedidos
-              </h5>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="card-title mb-0">Lista de pedidos</h5>
 
               <span class="badge bg-secondary">
                 {{ pedidos.length }} pedidos
               </span>
-
             </div>
-
 
             <!-- Sin pedidos -->
 
-            <div
-              *ngIf="pedidos.length === 0"
-              class="text-muted"
-            >
+            <div *ngIf="pedidos.length === 0" class="text-muted">
               No hay pedidos registrados.
             </div>
 
-
             <!-- Tabla -->
 
-            <div
-              *ngIf="pedidos.length > 0"
-              class="table-responsive"
-            >
-
+            <div *ngIf="pedidos.length > 0" class="table-responsive">
               <table
                 class="table table-hover align-middle mb-0"
+                style="width: 100%;"
               >
-
                 <thead>
-
                   <tr>
+                    <th>ID</th>
 
-                    <th>
-                      ID
-                    </th>
+                    <th>Cliente</th>
 
-                    <th>
-                      Cliente
-                    </th>
+                    <th>Producto</th>
 
-                    <th>
-                      Producto
-                    </th>
+                    <th class="text-center">Cantidad</th>
 
-                    <th>
-                      Cantidad
-                    </th>
+                    <th class="text-center">Estado</th>
 
-                    <th>
-                      Estado
-                    </th>
-
-                    <th>
-                      Acciones
-                    </th>
-
+                    <th>Acciones</th>
                   </tr>
-
                 </thead>
 
-
                 <tbody>
-
-                  <tr
-                    *ngFor="let pedido of pedidos"
-                  >
-
+                  <tr *ngFor="let pedido of pedidos">
                     <td>
                       {{ pedido.id }}
                     </td>
@@ -359,40 +228,43 @@ import { Pedido, CrearPedido } from "../services/pedido";
                       {{ obtenerNombreProducto(pedido.productoId) }}
                     </td>
 
-                    <td>
+                    <td class="text-center">
                       {{ pedido.cantidad }}
                     </td>
 
-                    <td>
-
+                    <td class="text-center">
                       <span
                         class="badge"
                         [ngClass]="{
                           'bg-primary': pedido.estado === 'CREADO',
                           'bg-info text-dark': pedido.estado === 'ACEPTADO',
-                          'bg-warning text-dark': pedido.estado === 'EN_PREPARACION',
+                          'bg-warning text-dark':
+                            pedido.estado === 'EN_PREPARACION',
                           'bg-secondary': pedido.estado === 'DESPACHADO',
                           'bg-success': pedido.estado === 'ENTREGADO',
-                          'bg-danger': pedido.estado === 'CANCELADO'
+                          'bg-danger': pedido.estado === 'CANCELADO',
                         }"
                       >
                         {{ pedido.estado }}
                       </span>
-
                     </td>
-
 
                     <!-- ACCIONES -->
 
                     <td>
-
                       <div
-                        *ngIf="(esAdmin || esOperador) && obtenerSiguienteEstados(pedido.estado).length > 0"
+                        *ngIf="
+                          (esAdmin || esOperador) &&
+                          obtenerSiguienteEstados(pedido.estado).length > 0
+                        "
                         class="d-flex flex-wrap gap-2"
                       >
-
                         <button
-                          *ngFor="let siguienteEstado of obtenerSiguienteEstados(pedido.estado)"
+                          *ngFor="
+                            let siguienteEstado of obtenerSiguienteEstados(
+                              pedido.estado
+                            )
+                          "
                           type="button"
                           class="btn btn-sm"
                           [ngClass]="{
@@ -400,41 +272,30 @@ import { Pedido, CrearPedido } from "../services/pedido";
                             'btn-warning': siguienteEstado === 'EN_PREPARACION',
                             'btn-primary': siguienteEstado === 'DESPACHADO',
                             'btn-info': siguienteEstado === 'ENTREGADO',
-                            'btn-danger': siguienteEstado === 'CANCELADO'
+                            'btn-danger': siguienteEstado === 'CANCELADO',
                           }"
                           (click)="cambiarEstado(pedido, siguienteEstado)"
                         >
-
                           {{ siguienteEstado }}
-
                         </button>
-
                       </div>
 
-
                       <span
-                        *ngIf="obtenerSiguienteEstados(pedido.estado).length === 0"
+                        *ngIf="
+                          obtenerSiguienteEstados(pedido.estado).length === 0
+                        "
                         class="text-muted small"
                       >
                         Sin acciones disponibles
                       </span>
-
                     </td>
-
                   </tr>
-
                 </tbody>
-
               </table>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </main>
   `,
 
@@ -449,7 +310,6 @@ import { Pedido, CrearPedido } from "../services/pedido";
         background: #f8f9fa;
       }
 
-
       /* ===== NAVBAR ===== */
 
       .top-navbar {
@@ -463,7 +323,6 @@ import { Pedido, CrearPedido } from "../services/pedido";
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
       }
 
-
       .nav-container {
         width: 100%;
         height: 100%;
@@ -473,13 +332,11 @@ import { Pedido, CrearPedido } from "../services/pedido";
         justify-content: space-between;
       }
 
-
       .nav-left {
         display: flex;
         align-items: center;
         gap: 0.25rem;
       }
-
 
       .nav-item {
         display: flex;
@@ -495,23 +352,19 @@ import { Pedido, CrearPedido } from "../services/pedido";
         white-space: nowrap;
       }
 
-
       .nav-item:hover {
         color: #ffffff;
         background-color: rgba(255, 255, 255, 0.06);
       }
-
 
       .nav-item.active {
         color: #22c55e;
         font-weight: 600;
       }
 
-
       .nav-item i {
         font-size: 1rem;
       }
-
 
       /* ===== DERECHA ===== */
 
@@ -521,13 +374,11 @@ import { Pedido, CrearPedido } from "../services/pedido";
         gap: 1rem;
       }
 
-
       .user-info {
         display: flex;
         align-items: center;
         gap: 0.6rem;
       }
-
 
       .avatar {
         width: 32px;
@@ -542,11 +393,9 @@ import { Pedido, CrearPedido } from "../services/pedido";
         font-size: 0.85rem;
       }
 
-
       .user-text {
         line-height: 1.2;
       }
-
 
       .user-name {
         color: #ffffff;
@@ -554,12 +403,10 @@ import { Pedido, CrearPedido } from "../services/pedido";
         font-weight: 500;
       }
 
-
       .user-role {
         color: #9ca3af;
         font-size: 0.7rem;
       }
-
 
       /* ===== LOGOUT ===== */
 
@@ -577,13 +424,11 @@ import { Pedido, CrearPedido } from "../services/pedido";
         transition: all 0.2s ease;
       }
 
-
       .btn-logout:hover {
         background-color: #ef4444;
         border-color: #ef4444;
         color: white;
       }
-
 
       /* ===== CONTENIDO ===== */
 
@@ -591,23 +436,23 @@ import { Pedido, CrearPedido } from "../services/pedido";
         min-height: calc(100vh - 56px);
       }
 
-
       /* ===== TABLA ===== */
 
       table {
         width: 100%;
       }
 
-
       th {
         white-space: nowrap;
+        text-align: center;
+        background-color: #8a97ad;
       }
-
 
       td {
         vertical-align: middle;
+        text-align: center;
+        background-color: #0808084b;
       }
-
 
       /* ===== BOTONES DE ESTADO ===== */
 
@@ -618,7 +463,6 @@ import { Pedido, CrearPedido } from "../services/pedido";
   ],
 })
 export class OrdersComponent implements OnInit {
-
   nombre = "";
   roles: string[] = [];
 
@@ -629,13 +473,11 @@ export class OrdersComponent implements OnInit {
   productos: Producto[] = [];
   pedidos: Pedido[] = [];
 
-
   nuevoPedido: CrearPedido = {
     clienteId: "",
     productoId: 0,
     cantidad: 1,
   };
-
 
   constructor(
     private auth: AuthService,
@@ -645,366 +487,189 @@ export class OrdersComponent implements OnInit {
     private catalogoService: CatalogoService,
   ) {}
 
-
   async ngOnInit() {
-
     // ==========================
     // USUARIO
     // ==========================
 
-    const account =
-      this.auth.getActiveAccount();
+    const account = this.auth.getActiveAccount();
 
-    this.nombre =
-      account?.name ||
-      account?.username ||
-      "";
+    this.nombre = account?.name || account?.username || "";
 
+    // El cliente se toma automáticamente del nombre de la cuenta logueada
+    // (sin importar el rol: admin, operador o cliente)
+    this.nuevoPedido.clienteId = this.nombre;
 
     // ==========================
     // ROLES
     // ==========================
 
-    const roles =
-      await this.auth.getRoles();
+    const roles = await this.auth.getRoles();
 
     this.roles = roles;
 
-    this.esAdmin =
-      roles.includes(
-        "ROLE_ADMINISTRADOR"
-      );
+    this.esAdmin = roles.includes("ROLE_ADMINISTRADOR");
 
-    this.esOperador =
-      roles.includes(
-        "ROLE_OPERADOR"
-      );
+    this.esOperador = roles.includes("ROLE_OPERADOR");
 
-    this.esCliente =
-      roles.includes(
-        "ROLE_CLIENTE"
-      );
+    this.esCliente = roles.includes("ROLE_CLIENTE");
 
+    console.log("Roles en Pedidos:", roles);
 
-    console.log(
-      "Roles en Pedidos:",
-      roles
-    );
+    console.log("Acceso Admin:", this.esAdmin);
 
-    console.log(
-      "Acceso Admin:",
-      this.esAdmin
-    );
+    console.log("Acceso Operador:", this.esOperador);
 
-    console.log(
-      "Acceso Operador:",
-      this.esOperador
-    );
-
-    console.log(
-      "Acceso Cliente:",
-      this.esCliente
-    );
-
+    console.log("Acceso Cliente:", this.esCliente);
 
     // ==========================
     // CARGAR PEDIDOS
     // ==========================
 
-    this.pedidoService
-      .listarPedidos()
-      .subscribe({
+    this.pedidoService.listarPedidos().subscribe({
+      next: (pedidos: Pedido[]) => {
+        this.pedidos = pedidos;
 
-        next: (pedidos: Pedido[]) => {
+        console.log("Pedidos cargados:", this.pedidos);
 
-          this.pedidos =
-            pedidos;
+        this.cdr.detectChanges();
+      },
 
-          console.log(
-            "Pedidos cargados:",
-            this.pedidos
-          );
-
-          this.cdr.detectChanges();
-
-        },
-
-        error: (error: any) => {
-
-          console.error(
-            "Error obteniendo pedidos:",
-            error
-          );
-
-        },
-
-      });
-
+      error: (error: any) => {
+        console.error("Error obteniendo pedidos:", error);
+      },
+    });
 
     // ==========================
     // CARGAR PRODUCTOS
     // ==========================
 
-    this.catalogoService
-      .listarProductos()
-      .subscribe({
+    this.catalogoService.listarProductos().subscribe({
+      next: (productos: Producto[]) => {
+        this.productos = productos;
 
-        next: (productos: Producto[]) => {
+        console.log("Productos cargados:", this.productos);
 
-          this.productos =
-            productos;
+        // Seleccionar automáticamente
+        // el primer producto
 
-          console.log(
-            "Productos cargados:",
-            this.productos
-          );
+        if (this.productos.length > 0) {
+          this.nuevoPedido.productoId = this.productos[0].id;
+        }
 
+        this.cdr.detectChanges();
+      },
 
-          // Seleccionar automáticamente
-          // el primer producto
-
-          if (
-            this.productos.length > 0
-          ) {
-
-            this.nuevoPedido.productoId =
-              this.productos[0].id;
-
-          }
-
-
-          this.cdr.detectChanges();
-
-        },
-
-        error: (error: any) => {
-
-          console.error(
-            "Error obteniendo productos:",
-            error
-          );
-
-        },
-
-      });
-
+      error: (error: any) => {
+        console.error("Error obteniendo productos:", error);
+      },
+    });
 
     this.cdr.detectChanges();
-
   }
-
 
   // ==========================
   // OBTENER NOMBRE PRODUCTO
   // ==========================
 
-  obtenerNombreProducto(
-    productoId: number
-  ): string {
+  obtenerNombreProducto(productoId: number): string {
+    const producto = this.productos.find((p) => p.id === productoId);
 
-    const producto =
-      this.productos.find(
-        p => p.id === productoId
-      );
-
-
-    return producto
-      ? producto.nombre
-      : `Producto #${productoId}`;
-
+    return producto ? producto.nombre : `Producto #${productoId}`;
   }
-
 
   // ==========================
   // CREAR PEDIDO
   // ==========================
 
   crearPedido() {
+    console.log("🚀 Creando pedido:", this.nuevoPedido);
 
-    console.log(
-      "🚀 Creando pedido:",
-      this.nuevoPedido
-    );
+    this.pedidoService.crearPedido(this.nuevoPedido).subscribe({
+      next: (pedido: Pedido) => {
+        console.log("✅ Pedido creado:", pedido);
 
+        // Agregar el pedido
+        // inmediatamente a la tabla
 
-    this.pedidoService
-      .crearPedido(
-        this.nuevoPedido
-      )
-      .subscribe({
+        this.pedidos.push(pedido);
 
-        next: (pedido: Pedido) => {
+        // Reiniciar formulario (mantener el cliente de la cuenta)
+        this.nuevoPedido = {
+          clienteId: this.nombre,
 
-          console.log(
-            "✅ Pedido creado:",
-            pedido
-          );
+          productoId: this.productos.length > 0 ? this.productos[0].id : 0,
 
+          cantidad: 1,
+        };
 
-          // Agregar el pedido
-          // inmediatamente a la tabla
+        this.cdr.detectChanges();
+      },
 
-          this.pedidos.push(
-            pedido
-          );
-
-
-          // Reiniciar formulario
-
-          this.nuevoPedido = {
-
-            clienteId: "",
-
-            productoId:
-              this.productos.length > 0
-                ? this.productos[0].id
-                : 0,
-
-            cantidad: 1,
-
-          };
-
-
-          this.cdr.detectChanges();
-
-        },
-
-
-        error: (error: any) => {
-
-          console.error(
-            "❌ Error creando pedido:",
-            error
-          );
-
-        },
-
-      });
-
+      error: (error: any) => {
+        console.error("❌ Error creando pedido:", error);
+      },
+    });
   }
-
 
   // ==========================
   // OBTENER SIGUIENTES ESTADOS
   // ==========================
 
-  obtenerSiguienteEstados(
-    estado: string
-  ): string[] {
-
+  obtenerSiguienteEstados(estado: string): string[] {
     switch (estado) {
-
       case "CREADO":
-
-        return [
-          "ACEPTADO",
-          "CANCELADO"
-        ];
+        return ["ACEPTADO", "CANCELADO"];
 
       case "ACEPTADO":
-
-        return [
-          "EN_PREPARACION",
-          "CANCELADO"
-        ];
+        return ["EN_PREPARACION", "CANCELADO"];
 
       case "EN_PREPARACION":
-
-        return [
-          "DESPACHADO",
-          "CANCELADO"
-        ];
+        return ["DESPACHADO", "CANCELADO"];
 
       case "DESPACHADO":
-
-        return [
-          "ENTREGADO"
-        ];
+        return ["ENTREGADO"];
 
       default:
-
         return [];
-
     }
-
   }
-
 
   // ==========================
   // CAMBIAR ESTADO
   // ==========================
 
-  cambiarEstado(
-    pedido: Pedido,
-    nuevoEstado: string
-  ) {
-
+  cambiarEstado(pedido: Pedido, nuevoEstado: string) {
     console.log(
-      `🔄 Cambiando pedido #${pedido.id}: ${pedido.estado} → ${nuevoEstado}`
+      `🔄 Cambiando pedido #${pedido.id}: ${pedido.estado} → ${nuevoEstado}`,
     );
 
+    this.pedidoService.cambiarEstado(pedido.id, nuevoEstado).subscribe({
+      next: (pedidoActualizado: Pedido) => {
+        console.log("✅ Pedido actualizado:", pedidoActualizado);
 
-    this.pedidoService
-      .cambiarEstado(
-        pedido.id,
-        nuevoEstado
-      )
-      .subscribe({
+        const indice = this.pedidos.findIndex(
+          (p) => p.id === pedidoActualizado.id,
+        );
 
-        next: (
-          pedidoActualizado: Pedido
-        ) => {
+        if (indice !== -1) {
+          this.pedidos[indice] = pedidoActualizado;
+        }
 
-          console.log(
-            "✅ Pedido actualizado:",
-            pedidoActualizado
-          );
+        this.cdr.detectChanges();
+      },
 
-
-          const indice =
-            this.pedidos.findIndex(
-              p =>
-                p.id === pedidoActualizado.id
-            );
-
-
-          if (
-            indice !== -1
-          ) {
-
-            this.pedidos[indice] =
-              pedidoActualizado;
-
-          }
-
-
-          this.cdr.detectChanges();
-
-        },
-
-
-        error: (error: any) => {
-
-          console.error(
-            "❌ Error cambiando estado del pedido:",
-            error
-          );
-
-        },
-
-      });
-
+      error: (error: any) => {
+        console.error("❌ Error cambiando estado del pedido:", error);
+      },
+    });
   }
-
 
   // ==========================
   // LOGOUT
   // ==========================
 
   logout() {
-
     this.msal.logoutRedirect();
-
   }
-
 }
