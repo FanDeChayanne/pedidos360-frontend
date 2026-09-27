@@ -1,5 +1,17 @@
 # Pedidos360Frontend
 
+USERS:
+
+Usuario.administrador@psegovia.onmicrosoft.com
+Taca6375111156
+
+Usuario.operador@psegovia.onmicrosoft.com
+Mayu4524861156
+
+Usuario.cliente@psegovia.onmicrosoft.com
+Rafo5386551156
+
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.8.
 
 ## Development server
